@@ -1,21 +1,22 @@
 import java.time.Duration
 
-data class Film(val imdbId: Int,
-             val releaseDate: Date,
-             val actors: List<String>,
-             val actresses: List<String>,
-             val genres: List<Genre>,
-             val title: String,
-             val director: String,
-             val duration: Duration)
+//data class Film(val imdbId: Int,
+//             val releaseDate: Date,
+//             val actors: List<String>,
+//             val actresses: List<String>,
+//             val genres: List<Genre>,
+//             val title: String,
+//             val director: String,
+//             val duration: Duration)
 
 
 data class Movie(
+             val name: String = "Gumnaam",
              val releaseDate: Date,
              val actors: List<String>,
-             val actresses: List<String>,
-             val genres: List<Genre>,
-             val duration: Duration) {
+             val actresses: List<String> = listOf(),
+             val genres: List<Genre> = listOf(Genre.DRAMA),
+             val duration: Duration = Duration.ofMinutes(100)) {
     companion object {
         fun create(releaseDate: Date, actor: String, actress: String , duration: Duration, genre: Genre = Genre.DRAMA):
                 Movie = Movie(
@@ -28,9 +29,9 @@ data class Movie(
     operator fun compareTo(movie: Movie): Int = if(this.duration.toMinutes() > movie.duration.toMinutes()) 1 else -1
 }
 
-class MoviesStore(val movies: List<Movie> = mutableListOf()){
+class MoviesStore(val movies: MutableList<Movie> = mutableListOf()){
     companion object {
-        fun create(movie: Movie) : MoviesStore = MoviesStore(listOf(movie))
+        fun create(movie: Movie) : MoviesStore = MoviesStore(mutableListOf(movie))
     }
 
     fun getMoviesReleasedInYear(year: Int): List<Movie> {

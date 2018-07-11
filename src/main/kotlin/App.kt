@@ -10,12 +10,22 @@ fun main(args: Array<String>) {
 //    println("Movies of duration greate than 100 mins: "+MoviesStore().getMovieswithDurationGreater(100))
 
 
-    val movie = Movie.create(Date(2018), actor = "Lavanya", actress = "Ishu", duration = Duration.ofMinutes(180))
-    val movie2 = Movie.create(Date(2018), actor = "Ishu", actress = "Lavanya", duration = Duration.ofMinutes(100))
-    println(movie > movie2)
-    println(movie < movie2)
-    val moviesStore = MoviesStore.create(movie)
-    println(movie2 in moviesStore)
-    println(movie in moviesStore)
+//    val movie = Movie.create(Date(2018), actor = "Lavanya", actress = "Ishu", duration = Duration.ofMinutes(180))
+//    val movie2 = Movie.create(Date(2018), actor = "Ishu", actress = "Lavanya", duration = Duration.ofMinutes(100))
+//    println(movie > movie2)
+//    println(movie < movie2)
+//    val moviesStore = MoviesStore.create(movie)
+//    println(movie2 in moviesStore)
+//    println(movie in moviesStore)
+
+    val store = movieStore {
+        movie {
+            name = "Welcome"
+            releaseDate = Date(2018)
+            actors = listOf("Alia")
+        }
+    }
+
+    println(store)
 
 }
