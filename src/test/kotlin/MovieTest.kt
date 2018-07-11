@@ -50,17 +50,32 @@ class MoviesStoreTest: FunSpec(){
             val store = MoviesStore(movies)
             store.getMoviesForActor("Akshay Kumar") shouldBe listOf(movie1, movie2, movie3, movie4)
         }
+
         test("should give expected list of movies with actress"){
             val store = MoviesStore(movies)
             store.getMoviesForActress("Juhi") shouldBe listOf(movie5)
         }
+
         test("should give expected list of movies with given year"){
             val store = MoviesStore(movies)
             store.getMoviesReleasedInYear(2018) shouldBe listOf(movie1, movie4)
         }
+
         test("should give expected list of movies with given duration"){
             val store = MoviesStore(movies)
             store.getMovieswithDurationGreater(180) shouldBe listOf(movie2)
+        }
+
+        test("should give expected list of movies with given duration using lambda"){
+            val store = MoviesStore(movies)
+            val moviesStore = store.getStoreWithMovies { it.duration > Duration.ofMinutes(180) }
+            moviesStore shouldBe MoviesStore(listOf(movie2))
+        }
+
+        test("should give expected list of movies with given year using lambda"){
+            val store = MoviesStore(movies)
+            val moviesStore = store.getStoreWithMovies { it.releaseDate == Date(2018) }
+            moviesStore shouldBe MoviesStore(listOf(movie1, movie4))
         }
     }
 }

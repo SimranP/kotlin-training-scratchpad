@@ -10,7 +10,7 @@ data class Film(val imdbId: Int,
              val duration: Duration)
 
 
-class Movie(
+data class Movie(
              val releaseDate: Date,
              val actors: List<String>,
              val actresses: List<String>,
@@ -25,21 +25,7 @@ class Movie(
                 genres = listOf(genre),
                 duration = duration)
     }
-
-    operator fun component1() =
-        releaseDate
-
-    operator fun component2() =
-        actors
-
-    operator fun component3() =
-        actresses
-
-    operator fun component4() =
-        genres
-
-    operator fun component5() =
-        duration
+    operator fun compareTo(movie: Movie): Int = if(this.duration.toMinutes() > movie.duration.toMinutes()) 1 else -1
 }
 
 class MoviesStore(val movies: List<Movie> = mutableListOf()){
@@ -60,24 +46,36 @@ class MoviesStore(val movies: List<Movie> = mutableListOf()){
     }
 
     fun getMoviesForActress(actor: String): List<Movie> {
+
         return movies.filter { it.actresses.contains(actor) }
     }
 
-    operator fun component1() =
-            movies[0]
+    inline fun getStoreWithMovies(predicate: (Movie) -> Boolean): MoviesStore{
+        val movies = mutableListOf<Movie>()
+        this.movies.asSequence().forEach { predicate(it) && movies.add(it) }
+        return MoviesStore(movies)
+    }
 
-    operator fun component2() =
-            movies[1]
+    operator fun contains(movie: Movie): Boolean =
+        movies.contains(movie)
 
-    operator fun component3() =
-            movies[2]
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
 
-    operator fun component4() =
-            movies[3]
+        other as MoviesStore
 
-    operator fun component5() =
-            movies[4]
+        if (movies != other.movies) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return movies.hashCode()
+    }
+
+
 }
 
 
-class Date(val year: Int)
+data class Date(val year: Int)
