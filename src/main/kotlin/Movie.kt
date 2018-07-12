@@ -1,3 +1,4 @@
+import org.json.JSONObject
 import java.time.Duration
 
 //data class Film(val imdbId: Int,
@@ -11,20 +12,21 @@ import java.time.Duration
 
 
 data class Movie(
-             val name: String = "Gumnaam",
-             val releaseDate: Date,
-             val actors: List<String>,
-             val actresses: List<String> = listOf(),
-             val genres: List<Genre> = listOf(Genre.DRAMA),
-             val duration: Duration = Duration.ofMinutes(100)) {
+        val name: String = "Gumnaam",
+        val releaseDate: Date,
+        val actors: List<String>,
+        val actresses: List<String> = listOf(),
+        val genres: List<Genre> = listOf(Genre.DRAMA),
+        val genresList: List<String> = listOf(),
+        val duration: Duration = Duration.ofMinutes(100)) {
     companion object {
-        fun create(releaseDate: Date, actor: String, actress: String , duration: Duration, genre: Genre = Genre.DRAMA):
+        fun create(json: JSONObject):
                 Movie = Movie(
-                releaseDate = releaseDate,
-                actors = listOf(actor),
-                actresses = listOf(actress),
-                genres = listOf(genre),
-                duration = duration)
+                name = json.get("Title") as String,
+                releaseDate = Date(json.get("Year") as String),
+                actors = (json.get("Actors") as String).split(","),
+                actresses =  listOf(),
+                genresList = (json.get("Genre") as String).split(","))
     }
     operator fun compareTo(movie: Movie): Int = if(this.duration.toMinutes() > movie.duration.toMinutes()) 1 else -1
 }
@@ -34,7 +36,7 @@ class MoviesStore(val movies: MutableList<Movie> = mutableListOf()){
         fun create(movie: Movie) : MoviesStore = MoviesStore(mutableListOf(movie))
     }
 
-    fun getMoviesReleasedInYear(year: Int): List<Movie> {
+    fun getMoviesReleasedInYear(year: String): List<Movie> {
         return movies.filter { it.releaseDate.year == year }
     }
 
@@ -79,4 +81,4 @@ class MoviesStore(val movies: MutableList<Movie> = mutableListOf()){
 }
 
 
-data class Date(val year: Int)
+data class Date(val year: String)

@@ -1,13 +1,3 @@
-
-val store = movieStore {
-    movie {
-        name = "Welcome"
-        releaseDate = Date(2018)
-        actors = listOf("Alia")
-    }
-}
-
-
 fun movieStore (predicate: MovieStore.()->MovieStore): MovieStore {
     return MovieStore().predicate()
 }
@@ -25,6 +15,6 @@ class MovieStore {
 
 class Film {
     var name = ""
-    var releaseDate = Date(0)
+    var releaseDate = Date(0.toString())
     var actors = listOf<String>()
 }

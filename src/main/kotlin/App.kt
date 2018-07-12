@@ -1,7 +1,7 @@
 import java.time.Duration
 
 fun main(args: Array<String>) {
-    val fileName = "src/main/resources/word-count.txt"
+//    val fileName = "src/main/resources/word-count.txt"
 //    println(countWordsFromFile(fileName))
 //    println(giveOccurenceForEachWord(readFile(fileName)))
 //    println("Movies for Actor Akshay Kumar: " + MoviesStore().getMoviesForActor("Akshay Kumar"))
@@ -18,14 +18,14 @@ fun main(args: Array<String>) {
 //    println(movie2 in moviesStore)
 //    println(movie in moviesStore)
 
-    val store = movieStore {
-        movie {
-            name = "Welcome"
-            releaseDate = Date(2018)
-            actors = listOf("Alia")
-        }
-    }
-
-    println(store)
+//    val store = movieStore {
+//        movie {
+//            name = "Welcome"
+//            releaseDate = Date(2018)
+//            actors = listOf("Alia")
+//        }
+//    }
+//
+//    println(store)
 
 }
